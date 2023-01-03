@@ -12,9 +12,7 @@ export class UsuarioService {
   async findAll(): Promise<Usuario[]> {
     try {
       return this.usuarioRepository.find();
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   }
 
   async checkAuth(email: string, senha: string): Promise<Usuario> {

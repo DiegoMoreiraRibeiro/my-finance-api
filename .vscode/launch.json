@@ -6,7 +6,7 @@
       "request": "launch",
       "name": "Debug Nest Framework",
       "env": {
-        "NODE_ENV": "production"
+        "NODE_ENV": "local"
       },
       "args": [
         "${workspaceFolder}/src/main.ts",

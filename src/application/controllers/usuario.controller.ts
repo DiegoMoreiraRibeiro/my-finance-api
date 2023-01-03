@@ -26,8 +26,6 @@ export class UsuarioController {
   //@ApiBearerAuth()
   @HttpCode(200)
   async Get(): Promise<Usuario[]> {
-    const usarios = await this.usuarioService.findAll();
-    console.log(usarios);
     return await this.usuarioService.findAll();
   }
 

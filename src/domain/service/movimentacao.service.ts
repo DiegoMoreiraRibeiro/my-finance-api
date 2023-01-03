@@ -76,9 +76,7 @@ export class MovimentacaoService {
         Entrada: valEntrada['VALOR_ENTRADA'],
         Saida: valSaid['VALOR_SAIDA'],
       };
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   }
 
   async findId(id: number): Promise<Movimentacao> {
@@ -92,9 +90,7 @@ export class MovimentacaoService {
   async add(movimentacao: Movimentacao): Promise<Movimentacao> {
     try {
       return this.movimentacaoRepository.save(movimentacao);
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   }
 
   async update(movimentacao: Movimentacao): Promise<Movimentacao> {
