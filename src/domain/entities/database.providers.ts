@@ -10,7 +10,7 @@ export const databaseProviders = [
         type: 'mysql',
         host: process.env.HOST,
         port: parseInt(process.env.PORT_DATABASE),
-        username: process.env.USER,
+        username: process.env.USER_DB,
         password: process.env.PASS,
         database: process.env.DATABASE,
         entities: [__dirname + '../../**/*.entity.{js,ts}'],
