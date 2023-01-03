@@ -21,4 +21,7 @@ export class MovimentacaoView {
 
   @ApiProperty()
   TipoAcaoId: number;
+
+  @ApiProperty()
+  UsuarioMovimentacaoCompartilhadaId: number;
 }

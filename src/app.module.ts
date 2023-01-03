@@ -7,9 +7,19 @@ import { MovimentacaoModule } from './infra/module/movimentacao.module';
 import { TipoAcaoModule } from './infra/module/tipoacao.module';
 import { LoginController } from './application/controllers/login.controller';
 import { UsuarioModule } from './infra/module/usuario.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [UsuarioModule, TipoAcaoModule, MovimentacaoModule, AuthModule],
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: `.${process.env.NODE_ENV.trim()}.env`.trim(),
+    }),
+    UsuarioModule,
+    TipoAcaoModule,
+    MovimentacaoModule,
+    AuthModule,
+  ],
   controllers: [
     UsuarioController,
     TipoAcaoController,

@@ -63,7 +63,7 @@ export class MovimentacaoController {
     return await this.movimentacaoService.update(movimentacao);
   }
 
-  @Delete(':id')
+  @Delete(':Id')
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   async DeleteById(@Param('Id') Id: number): Promise<number> {

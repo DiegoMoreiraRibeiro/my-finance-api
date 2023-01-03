@@ -8,6 +8,7 @@ export class MovimentacaoService {
   CONFIG_RELATIONS = {
     TipoAcao: true,
     Usuario: true,
+    UsuarioMovimentacaoCompartilhada: true,
   };
 
   constructor(
@@ -105,6 +106,17 @@ export class MovimentacaoService {
     const movimentacao = await this.movimentacaoRepository.findOne({
       where: [{ Id: id }],
     });
+    if (movimentacao.MovimentacaoCompartilhada) {
+      const listMovimentacaoCompartilhada = this.movimentacaoRepository.find();
+      const movimentacaoCompartilhada = (
+        await listMovimentacaoCompartilhada
+      ).find(
+        (x) =>
+          x.Descricao == movimentacao.Descricao &&
+          x.Valor == movimentacao.Valor,
+      );
+      await this.movimentacaoRepository.delete(movimentacaoCompartilhada.Id);
+    }
     await this.movimentacaoRepository.delete(movimentacao.Id);
     return id;
   }

@@ -28,7 +28,11 @@ export class Movimentacao {
   @Column({ name: 'DataMovimentacao' })
   DataMovimentacao: Date;
 
-  @Column({ name: 'MovimentacaoCompartilhada' })
+  @Column({
+    name: 'MovimentacaoCompartilhada',
+    type: 'bit',
+    transformer: { from: (v: Buffer) => !!v.readInt8(0), to: (v) => v },
+  })
   MovimentacaoCompartilhada: boolean;
 
   @Column('decimal', {
@@ -53,4 +57,12 @@ export class Movimentacao {
     name: 'UsuarioId',
   })
   Usuario: Usuario;
+
+  @Column({ name: 'UsuarioMovimentacaoCompartilhadaId' })
+  UsuarioMovimentacaoCompartilhadaId?: number;
+  @OneToOne(() => Usuario)
+  @JoinColumn({
+    name: 'UsuarioId',
+  })
+  UsuarioMovimentacaoCompartilhada?: Usuario;
 }
