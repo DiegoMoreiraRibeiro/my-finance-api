@@ -116,4 +116,60 @@ export class MovimentacaoService {
     await this.movimentacaoRepository.delete(movimentacao.Id);
     return id;
   }
+
+  async relatorioEntradaSaidaAnual(Id: number, Ano: number): Promise<any> {
+    try {
+      const ret = [];
+      const meses = [
+        'Jan',
+        'Fev',
+        'Mar',
+        'Abr',
+        'Mai',
+        'Jun',
+        'Jul',
+        'Ago',
+        'Set',
+        'Out',
+        'Nov',
+        'Dez',
+      ];
+
+      for (let index = 0; index < meses.length; index++) {
+        const firstDay = new Date(Ano, Number(index), 1).getDate();
+        const lastDay = new Date(Ano, Number(index) + 1, 0).getDate();
+
+        const initDate = FormatDateInit(
+          new Date(`${Ano}-${('00' + index).slice(-2)}-${firstDay} 00:00:00`),
+        );
+        const endDate = FormatDateEnd(
+          new Date(`${Ano}-${('00' + index).slice(-2)}-${lastDay} 23:59:59`),
+        );
+
+        const valEntrada = await this.movimentacaoRepository
+          .createQueryBuilder('m')
+          .select(`IFNULL(SUM(m.VALOR), 0)`, 'VALOR_ENTRADA')
+          .where(
+            `m.usuarioid = ${Id} AND m.tipoacaoid = 1 AND m.DataMovimentacao  between '${initDate}' and '${endDate}'`,
+          )
+          .getRawOne();
+
+        const valSaid = await this.movimentacaoRepository
+          .createQueryBuilder('m')
+          .select(`IFNULL(SUM(m.VALOR), 0)`, 'VALOR_SAIDA')
+          .where(
+            `m.usuarioid = ${Id} AND m.tipoacaoid = 2 AND m.DataMovimentacao between '${initDate}' and '${endDate}'`,
+          )
+          .getRawOne();
+        const obj = {
+          name: meses[index],
+          entrada: valEntrada['VALOR_ENTRADA'],
+          saida: valSaid['VALOR_SAIDA'],
+        };
+        ret.push(obj);
+      }
+
+      return ret;
+    } catch (error) {}
+  }
 }

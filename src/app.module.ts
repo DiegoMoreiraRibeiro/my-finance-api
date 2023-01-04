@@ -1,3 +1,4 @@
+import { RelatorioController } from './application/controllers/relatorios.controller';
 import { Module } from '@nestjs/common';
 import { AuthModule } from './infra/module/auth.module';
 import { MovimentacaoController } from './application/controllers/movimentacao.controller';
@@ -25,6 +26,7 @@ import { ConfigModule } from '@nestjs/config';
     TipoAcaoController,
     MovimentacaoController,
     LoginController,
+    RelatorioController,
   ],
 })
 export class AppModule {}
