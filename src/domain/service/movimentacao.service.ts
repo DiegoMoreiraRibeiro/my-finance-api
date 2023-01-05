@@ -140,10 +140,14 @@ export class MovimentacaoService {
         const lastDay = new Date(Ano, Number(index) + 1, 0).getDate();
 
         const initDate = FormatDateInit(
-          new Date(`${Ano}-${('00' + index).slice(-2)}-${firstDay} 00:00:00`),
+          new Date(
+            `${Ano}-${('00' + index + 1).slice(-2)}-${firstDay} 00:00:00`,
+          ),
         );
         const endDate = FormatDateEnd(
-          new Date(`${Ano}-${('00' + index).slice(-2)}-${lastDay} 23:59:59`),
+          new Date(
+            `${Ano}-${('00' + index + 1).slice(-2)}-${lastDay} 23:59:59`,
+          ),
         );
 
         const valEntrada = await this.movimentacaoRepository
